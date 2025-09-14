@@ -17,6 +17,9 @@ const authorSchema = new Schema({
     birth_date: {
         type: Date
     }
+},
+{
+    versionKey: false
 });
 
 export const AuthorModel = model("Author", authorSchema);

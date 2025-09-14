@@ -9,6 +9,9 @@ const publisherSchema = new Schema({
         type: String,
         require: true 
     }
+},
+{
+    versionKey: false
 });
 
 export const PublisherModel = model("Publisher", publisherSchema);

@@ -17,6 +17,9 @@ const libraryCardSchema = new Schema({
         type: Date,
         require: true
     }
+},
+{
+    versionKey: false
 });
 
 export const LibraryCardModel = model("Library_Card", libraryCardSchema);

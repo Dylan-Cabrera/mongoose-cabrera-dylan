@@ -15,12 +15,8 @@ const memberSchema = new Schema({
         type: Date,
         default: Date.now
     },
-    status: {
-        type: String,
-        enum: ["active", "inactive", "suspended"],
-        default: "active"
-    },
     contact: {
+        _id: false,
         email: {
             type: String
         },
@@ -31,6 +27,9 @@ const memberSchema = new Schema({
             type: Number
         }
     }
+},
+{
+    versionKey: false
 });
 
 export const MemberModel = model("Member", memberSchema);

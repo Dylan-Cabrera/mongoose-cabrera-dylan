@@ -9,7 +9,7 @@ const bookSchema = new Schema({
         type: Date,
         require: true
     },
-    author: {
+    author_id: {
         type: Types.ObjectId,
         require: true
     },
@@ -19,6 +19,7 @@ const bookSchema = new Schema({
         require: true
     },
     edition_info: {
+        _id: false,
         page_count: {
             type: Number,
             require: true
@@ -32,6 +33,9 @@ const bookSchema = new Schema({
             require: true
         }
     }
+},
+{
+    versionKey: false
 });
 
 export const BookModel = model("Book", bookSchema);
