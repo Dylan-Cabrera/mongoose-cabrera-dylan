@@ -19,7 +19,15 @@ const authorSchema = new Schema({
     }
 },
 {
-    versionKey: false
+    versionKey: false,
+    toJSON: {virtuals: true}, //necesarios para el populate sin referencia
+    toObject: {virtuals: true}
 });
+
+authorSchema.virtual("books", {
+    ref: "Book",
+    localField: "_id",
+    foreignField: "author_id"
+})
 
 export const AuthorModel = model("Author", authorSchema);

@@ -1,4 +1,5 @@
 import { AuthorModel } from "../models/author.model.js";
+import { BookModel } from "../models/book.model.js";
 
 export const createAuthor = async (req,res) => {
     const {first_name, last_name, nationality, birth_date} = req.body;
@@ -19,7 +20,7 @@ export const createAuthor = async (req,res) => {
 
 export const getAuthor = async (req,res) => {
     try {
-        const authors = await AuthorModel.find();
+        const authors = await AuthorModel.find().populate("books");
 
         res.status(200).json({
             data: authors
@@ -34,7 +35,7 @@ export const getAuthor = async (req,res) => {
 
 export const getAuthorById = async (req,res) => {
     try {
-         const author = await AuthorModel.findById(req.params.id);
+         const author = await AuthorModel.findById(req.params.id).populate("books");
 
          res.status(200).json({
             data: author
@@ -68,7 +69,15 @@ export const updateAuthor = async (req,res) => {
 
 export const deleteAuthor = async (req,res) => {
     try {
-        const deleteAuthor = await AuthorModel.findByIdAndDelete(req.params.id);
+
+        //eliminacion en cascada, cuando se borra un autor, tambien se borrar sus libros
+        const author = await AuthorModel.findById(req.params.id).populate("books");
+
+        for (const book of author.books) { //accede a los libros
+            await BookModel.findByIdAndDelete(book._id); //recorre el array y borra los libros de a uno
+        }
+
+        await AuthorModel.findByIdAndDelete(req.params.id);
 
         res.status(200).json({
             msg: "Autor eliminado correctamente"

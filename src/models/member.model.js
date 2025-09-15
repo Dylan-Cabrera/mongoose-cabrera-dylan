@@ -11,9 +11,9 @@ const memberSchema = new Schema({
         trim: true,
         require: true
     },
-    registration_date: {
-        type: Date,
-        default: Date.now
+    deleted: {
+        type: Boolean,
+        default: false
     },
     contact: {
         _id: false,

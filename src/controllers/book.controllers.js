@@ -19,7 +19,7 @@ export const createBook = async (req,res) => {
 
 export const getBook = async (req,res) => {
     try {
-        const books = await BookModel.find();
+        const books = await BookModel.find().populate("author_id");
 
         res.status(200).json({
             data: books
@@ -34,7 +34,7 @@ export const getBook = async (req,res) => {
 
 export const getBookById = async (req,res) => {
     try {
-         const book = await BookModel.findById(req.params.id);
+         const book = await BookModel.findById(req.params.id).populate();
 
          res.status(200).json({
             data: book

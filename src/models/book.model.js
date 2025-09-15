@@ -11,13 +11,16 @@ const bookSchema = new Schema({
     },
     author_id: {
         type: Types.ObjectId,
+        ref: "Author",
         require: true
     },
-    publisher_id: {
+    publisher_id: [
+        {
         type: Types.ObjectId,
         ref: "Publisher",
         require: true
-    },
+    }
+    ] ,
     edition_info: {
         _id: false,
         page_count: {

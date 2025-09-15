@@ -1,9 +1,9 @@
 import { MemberModel } from "../models/member.model.js";
 
 export const createMember = async (req,res) => {
-    const {first_name, last_name, registration_date, status, contact, } = req.body;
+    const {first_name, last_name, contact, } = req.body;
     try {
-        const newMember = await MemberModel.create({first_name, last_name, registration_date, status, contact});
+        const newMember = await MemberModel.create({first_name, last_name, contact});
         
         res.status(201).json({
             msg: "Socio creado correctamente",
@@ -19,7 +19,9 @@ export const createMember = async (req,res) => {
 
 export const getMembers = async (req,res) => {
     try {
-        const members = await MemberModel.find();
+        const members = await MemberModel.find( {
+            deleted: {$ne: true} //exclueye a los que tengan deleted en true
+        });
 
         res.status(200).json({
             data: members
@@ -68,7 +70,9 @@ export const updateMember = async (req,res) => {
 
 export const deleteMember = async (req,res) => {
     try {
-        const deleteMember = await MemberModel.findByIdAndDelete(req.params.id);
+        await MemberModel.findByIdAndUpdate(req.params.id, 
+           { deleted: true } //eliminacion logica
+        );
 
         res.status(200).json({
             msg: "Socio eliminado correctamente"
