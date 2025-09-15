@@ -11,7 +11,16 @@ const publisherSchema = new Schema({
     }
 },
 {
-    versionKey: false
+    versionKey: false,
+    toJSON: {virtuals: true},
+    toObject: {virtuals: true}
 });
+
+publisherSchema.virtual("books", {
+    ref: "Book",
+    localField: "_id",
+    foreignField: "publisher_id"
+})
+
 
 export const PublisherModel = model("Publisher", publisherSchema);

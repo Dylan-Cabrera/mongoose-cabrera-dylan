@@ -19,7 +19,7 @@ export const createPublisher = async (req,res) => {
 
 export const getPublisher = async (req,res) => {
     try {
-        const publishers = await PublisherModel.find();
+        const publishers = await PublisherModel.find().populate("books");
 
         res.status(200).json({
             data: publishers
