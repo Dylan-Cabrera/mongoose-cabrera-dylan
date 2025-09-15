@@ -1,4 +1,4 @@
-//base de datos de una libreria
+base de datos de una libreria
 
 Modelos:
 
@@ -42,3 +42,19 @@ Books -> publishers_id
 Un libro no puede existir sin una editorial, la editorial si puede existir sin el libro
 El mismo libro puede estar publicado en varias editoriales, la referencia no puede estar en publishers porque un editoriar puede tener cientos o miles de libros publicados y seria menos eficiente.
 
+
+Populate
+
+Configuracion necesaria en los modelos para el populate sin referencia
+{
+    toJSON: {virtuals: true},
+    toObject: {virtuals: true}
+}
+
+Los virtual son una vista de datos que crea mongo cuando es necesario, no existen en la base de datos
+
+authorSchema.virtual("books", {
+    ref: "Book", //Coleccion donde va a buscar la referencia
+    localField: "_id",
+    foreignField: "author_id" //campo de la coleccion que va a comparar con el localFiel
+})

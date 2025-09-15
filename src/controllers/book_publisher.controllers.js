@@ -7,11 +7,12 @@ export const createBookPublisher = async (req,res) => {
         const book = await BookModel.findByIdAndUpdate(book_id,
             {
                 $push: {publisher_id: publisher_id}
-            },
-            {new: true}
+            }
         );
 
-        res.status(200).json(book);
+        res.status(200).json({
+            msg: "Editorial agregada correctamente"
+        });
     } catch (error) {
         res.status(500).json({
             msg: "Error interno del servidor"
